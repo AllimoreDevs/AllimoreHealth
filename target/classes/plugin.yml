@@ -1,0 +1,10 @@
+name: AllimoreHealth
+version: 1.0-SNAPSHOT
+main: taurasi.marc.allimorehealth.allimorehealth.Allimorehealth
+prefix: AllimoreHealth
+authors: [TodAtsu]
+description: Adds Health Bars to Entities
+commands:
+  SetMaxHealth:
+    description: "Allows you to set the max hp of a specified player or yourself."
+    usage: "/SetMaxHealth <amount> (<playername>)"
