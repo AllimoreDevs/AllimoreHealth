@@ -1,5 +1,6 @@
 name: AllimoreHealth
 version: ${project.version}
+depend: [AllimoreCore]
 main: taurasi.marc.allimorehealth.allimorehealth.Allimorehealth
 prefix: AllimoreHealth
 authors: [TodAtsu]

@@ -7,3 +7,5 @@ BridgeRails/bin/*
 Modmode/bin/*
 Flight/bin/*
 Quester/bin/*
+target/
+.idea/workspace.xml

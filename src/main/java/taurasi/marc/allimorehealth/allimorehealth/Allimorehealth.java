@@ -1,15 +1,14 @@
 package taurasi.marc.allimorehealth.allimorehealth;
 
 import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import taurasi.marc.allimorecore.CustomConfig;
 import taurasi.marc.allimorehealth.allimorehealth.HealthBars.HealthbarListener;
 import taurasi.marc.allimorehealth.allimorehealth.ScalingHealth.CommandManager;
 import taurasi.marc.allimorehealth.allimorehealth.ScalingHealth.ConnectListener;
 import taurasi.marc.allimorehealth.allimorehealth.ScalingHealth.ScalingHealthManager;
 
 public final class Allimorehealth extends JavaPlugin {
-
     // Enemies always display Health Bars, Experimental Feature
     public static boolean ALWAYS_SHOW_HEALTHBAR = false;
 
@@ -27,7 +26,8 @@ public final class Allimorehealth extends JavaPlugin {
 
         // Set up Config
         saveDefaultConfig();
-        scalingHealthManager = new ScalingHealthManager(getConfig().getInt("starting health"));
+        CustomConfig playerData = new CustomConfig("PlayerData.yml", this.getDataFolder().getPath(), this);
+        scalingHealthManager = new ScalingHealthManager(getConfig().getInt("starting health"), playerData);
 
         // Set up Listeners
         damageListener = new HealthbarListener();

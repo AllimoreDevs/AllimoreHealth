@@ -2,6 +2,7 @@ package taurasi.marc.allimorehealth.allimorehealth.ScalingHealth;
 
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
+import taurasi.marc.allimorecore.CustomConfig;
 
 import java.util.Objects;
 
@@ -9,13 +10,13 @@ public class ScalingHealthManager {
     // Default Value of starting health if the plugin is unable to read it from the config
     private int startingMaxHealth = 8;
 
-    private ConfigWrapper configWrapper;
+    private CustomConfig configWrapper;
 
-    public ScalingHealthManager(int startingMaxHealth){
+    public ScalingHealthManager(int startingMaxHealth, CustomConfig configWrapper){
         // Read Values from the config
         this.startingMaxHealth = startingMaxHealth;
 
-        configWrapper = new ConfigWrapper();
+        this.configWrapper = configWrapper;
     }
 
     void OnPlayerJoin(Player player){
@@ -36,18 +37,18 @@ public class ScalingHealthManager {
 
     private void WritePlayerData(Player player, int amount){
         SetPlayerMaxHealth(player, amount);
-        configWrapper.getConfig().set("Players." + player.getUniqueId() + ".maxHealth", amount);
-        configWrapper.getConfig().set("Players." + player.getUniqueId() + ".name", player.getDisplayName());
+        configWrapper.GetConfig().set("Players." + player.getUniqueId() + ".maxHealth", amount);
+        configWrapper.GetConfig().set("Players." + player.getUniqueId() + ".name", player.getDisplayName());
         configWrapper.SaveConfig();
     }
 
     private void ReadPlayerData(Player player){
-        int maxHealth = configWrapper.getConfig().getInt("Players." + player.getUniqueId() + ".maxHealth");
+        int maxHealth = configWrapper.GetConfig().getInt("Players." + player.getUniqueId() + ".maxHealth");
         SetPlayerMaxHealth(player, maxHealth);
     }
 
     private boolean ContainsPlayer(Player player){
-        return configWrapper.getConfig().contains("Players." + player.getUniqueId());
+        return configWrapper.GetConfig().contains("Players." + player.getUniqueId());
     }
 
     private void SetPlayerMaxHealth(Player player, int amount){

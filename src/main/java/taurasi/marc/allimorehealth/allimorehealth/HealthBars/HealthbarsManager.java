@@ -6,6 +6,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import taurasi.marc.allimorecore.StringUtils;
 
 class HealthbarsManager {
 
@@ -31,11 +32,12 @@ class HealthbarsManager {
     }
 
     private static String ConstructDeadString(Entity entity){
-        return entity.getType().toString() + ChatColor.RED + " [....................]";
+       String entityTypeName = StringUtils.formatEnumString(entity.getType().toString());
+       return entityTypeName + ChatColor.RED + " [....................]";
     }
 
     private static String ConstructHealthString(Entity entity, double damage){
-        String entityTypeName = entity.getType().toString();
+        String entityTypeName = StringUtils.formatEnumString(entity.getType().toString());
         ChatColor healthBarColor = ChatColor.GREEN;
 
         Damageable damageEntity = (Damageable)entity;
@@ -62,6 +64,6 @@ class HealthbarsManager {
             healthBarColor = ChatColor.YELLOW;
         }
 
-        return String.format("%s %s [%s]", entityTypeName, healthBarColor, new String(healthBarText));
+        return String.format("%s %s[%s]", entityTypeName, healthBarColor, new String(healthBarText));
     }
 }
