@@ -2,9 +2,10 @@ package taurasi.marc.allimorehealth.allimorehealth;
 
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
-import taurasi.marc.allimorecore.CustomConfig;
 import taurasi.marc.allimorehealth.allimorehealth.HealthBars.HealthbarListener;
+import taurasi.marc.allimorehealth.allimorehealth.HealthBars.HealthbarsManager;
 import taurasi.marc.allimorehealth.allimorehealth.ScalingHealth.CommandManager;
+import taurasi.marc.allimorehealth.allimorehealth.ScalingHealth.ConfigWrapper;
 import taurasi.marc.allimorehealth.allimorehealth.ScalingHealth.ConnectListener;
 import taurasi.marc.allimorehealth.allimorehealth.ScalingHealth.ScalingHealthManager;
 
@@ -13,6 +14,7 @@ public final class Allimorehealth extends JavaPlugin {
     public static boolean ALWAYS_SHOW_HEALTHBAR = false;
 
     public static Allimorehealth INSTANCE;
+    public static HealthbarsManager HEALTHBARS;
 
     private ScalingHealthManager scalingHealthManager;
 
@@ -24,19 +26,21 @@ public final class Allimorehealth extends JavaPlugin {
         // Plugin startup logic
         INSTANCE = this;
 
-        // Set up Config
-        saveDefaultConfig();
-        CustomConfig playerData = new CustomConfig("PlayerData.yml", this.getDataFolder().getPath(), this);
-        scalingHealthManager = new ScalingHealthManager(getConfig().getInt("starting health"), playerData);
+        // Singletons
+        ConfigWrapper configWrapper = new ConfigWrapper(this);
+        scalingHealthManager = new ScalingHealthManager(configWrapper.getStartingHealth(), configWrapper.getPlayerData());
+        HEALTHBARS = new HealthbarsManager();
 
         // Set up Listeners
         damageListener = new HealthbarListener();
         connectListener = new ConnectListener(scalingHealthManager);
+
         getServer().getPluginManager().registerEvents(damageListener, this);
         getServer().getPluginManager().registerEvents(connectListener, this);
 
         // Set up Command
         this.getCommand("SetMaxHealth").setExecutor(new CommandManager());
+        this.getCommand("DebugTod").setExecutor(new CommandManager());
 
         getServer().getConsoleSender().sendMessage("[AllimoreHealth!] Allimore Health plugin Enabled!");
     }

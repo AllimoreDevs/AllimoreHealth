@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class ScalingHealthManager {
     // Default Value of starting health if the plugin is unable to read it from the config
-    private int startingMaxHealth = 8;
+    private int startingMaxHealth;
 
     private CustomConfig configWrapper;
 

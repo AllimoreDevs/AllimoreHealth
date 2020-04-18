@@ -12,8 +12,20 @@ public class CommandManager implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         // Get Out if the command is not in use
-        if( !(command.getName().equalsIgnoreCase("SetMaxHealth")) ) return false;
+        if( command.getName().equalsIgnoreCase("SetMaxHealth") ) return SetMaxHpCommand(sender, args);
+        if( command.getName().equalsIgnoreCase("DebugTod") ) return Debug(sender, args);
+        return false;
+    }
 
+    private boolean Debug(CommandSender sender, String[] args){
+        if(sender instanceof Player){
+            Player player = (Player)sender;
+            player.sendMessage("Current World Name: " + player.getLocation().getWorld().getName());
+        }
+        return true;
+    }
+
+    private boolean SetMaxHpCommand(CommandSender sender, String[] args) {
         int newMaxHp = ReadMaxHp(args, sender);
         if(newMaxHp == 0){return false;}
 
@@ -25,7 +37,6 @@ public class CommandManager implements CommandExecutor {
             return SetMaxHpOnProvidedPlayer(sender, args, newMaxHp);
         }
     }
-
     private int ReadMaxHp(String[] args, CommandSender sender){
         if(args.length < 1){
             LogError(sender,"You have to specify an amount of hp to set the max to!");
@@ -38,7 +49,6 @@ public class CommandManager implements CommandExecutor {
             return 0;
         }
     }
-
     private boolean SetMaxHpOnSender(CommandSender sender, int newMaxHp){
         if(sender instanceof Player){
             Player player = (Player)sender;
@@ -51,7 +61,6 @@ public class CommandManager implements CommandExecutor {
             return false;
         }
     }
-
     private boolean SetMaxHpOnProvidedPlayer(CommandSender sender, String[] args, int newMaxHp){
         // Player name was provided
         Player player = Allimorehealth.INSTANCE.getServer().getPlayer(args[1]);

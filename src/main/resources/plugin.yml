@@ -9,3 +9,6 @@ commands:
   SetMaxHealth:
     description: "Allows you to set the max hp of a specified player or yourself."
     usage: "/SetMaxHealth <amount> (<playername>)"
+  DebugTod:
+    description: "Debug Command for testing purposes."
+    usage: "/DebugTod"
